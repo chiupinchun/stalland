@@ -7,11 +7,10 @@ import * as THREE from 'three'
   imports: [],
   template: ''
 })
-export class LightComponent implements OnInit {
-  @Input()
+export class LightComponent {
   scene!: THREE.Scene
 
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
     // 環境光
     const ambientLight = new THREE.AmbientLight(0xffffff, Math.PI / 2);
     this.scene.add(ambientLight);

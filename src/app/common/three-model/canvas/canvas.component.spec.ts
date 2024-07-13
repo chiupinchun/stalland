@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { StarNightComponent } from './star-night.component';
+import { CanvasComponent } from './canvas.component';
 
-describe('StarNightComponent', () => {
-  let component: StarNightComponent;
-  let fixture: ComponentFixture<StarNightComponent>;
+describe('CanvasComponent', () => {
+  let component: CanvasComponent;
+  let fixture: ComponentFixture<CanvasComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [StarNightComponent]
+      imports: [CanvasComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(StarNightComponent);
+    fixture = TestBed.createComponent(CanvasComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

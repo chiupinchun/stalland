@@ -8,13 +8,12 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
   imports: [],
   template: ''
 })
-export class ModelComponent implements OnInit {
-  @Input()
+export class ModelComponent {
   scene!: THREE.Scene
   @Input()
   src!: string
 
-  async ngOnInit() {
+  async ngAfterViewInit() {
     const loader = new GLTFLoader();
     const gltf = await loader.loadAsync(this.src);
 

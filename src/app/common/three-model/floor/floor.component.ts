@@ -7,11 +7,10 @@ import * as THREE from 'three'
   imports: [],
   template: ''
 })
-export class FloorComponent implements OnInit {
-  @Input()
+export class FloorComponent {
   scene!: THREE.Scene
 
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
     // 添加地板
     const floorGeometry = new THREE.PlaneGeometry(100, 100);
     const floorMaterial = new THREE.MeshStandardMaterial({ color: 0x808080, roughness: 0.8, metalness: 0.2 });
