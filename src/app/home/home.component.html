@@ -1,5 +1,8 @@
 <app-canvas>
   <app-light />
   <app-floor />
-  <app-model src="assets/prairie-dog.glb" />
+  @for (model of models; track $index) {
+  <app-model [src]="model.src"></app-model>
+  }
 </app-canvas>
+<button (click)="pushModel()">TEST</button>

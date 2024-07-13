@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, NgZone, OnInit } from '@angular/core';
 import * as THREE from 'three'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 
@@ -12,6 +12,10 @@ export class ModelComponent {
   scene!: THREE.Scene
   @Input()
   src!: string
+
+  constructor(
+    private ngZone: NgZone
+  ) { }
 
   async ngAfterViewInit() {
     const loader = new GLTFLoader();
@@ -38,7 +42,7 @@ export class ModelComponent {
       const delta = clock.getDelta()
       if (mixer) { mixer.update(delta) }
     }
-    animate();
+    this.ngZone.runOutsideAngular(animate)
 
     this.scene.add(gltf.scene);
   }

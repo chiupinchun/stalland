@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild, AfterViewInit, ContentChildren, QueryList, Input } from '@angular/core';
+import { Component, ElementRef, ViewChild, AfterViewInit, ContentChildren, QueryList, Input, SimpleChanges, NgZone } from '@angular/core';
 import * as THREE from 'three';
 import { LightComponent } from '../light/light.component';
 import { FloorComponent } from '../floor/floor.component';
@@ -20,11 +20,16 @@ export class CanvasComponent {
 
   scene = new THREE.Scene();
 
-  ngAfterContentInit(): void {
+  constructor(
+    private ngZone: NgZone
+  ) { }
+
+  ngAfterContentChecked(): void {
+    console.log(this.modelComponents)
     // 將 scene 傳遞給子組件
-    this.lightComponents.forEach(comp => comp.scene = this.scene);
-    this.floorComponents.forEach(comp => comp.scene = this.scene);
-    this.modelComponents.forEach(comp => comp.scene = this.scene);
+    this.lightComponents?.forEach(comp => comp.scene = this.scene);
+    this.floorComponents?.forEach(comp => comp.scene = this.scene);
+    this.modelComponents?.forEach(comp => comp.scene = this.scene);
   }
 
   async ngAfterViewInit() {
@@ -46,7 +51,7 @@ export class CanvasComponent {
       requestAnimationFrame(animate);
       renderer.render(this.scene, camera);
     };
-    animate();
+    this.ngZone.runOutsideAngular(animate)
 
     window.addEventListener('resize', () => {
       camera.aspect = window.innerWidth / window.innerHeight;

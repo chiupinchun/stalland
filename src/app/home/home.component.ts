@@ -12,5 +12,10 @@ import { ModelComponent } from "@app/common/three-model/model/model.component";
   styleUrl: './home.component.scss'
 })
 export class HomeComponent {
-
+  models = [
+    { src: 'assets/prairie-dog.glb' }
+  ]
+  pushModel() {
+    this.models.push({ src: 'assets/prairie-dog.glb' })
+  }
 }
