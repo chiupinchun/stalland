@@ -1,8 +1,10 @@
-<app-canvas>
-  <app-light />
-  <app-floor />
-  @for (model of models; track $index) {
-  <app-model [src]="model.src"></app-model>
-  }
-</app-canvas>
+<div style="height: 500px;">
+  <app-canvas>
+    <app-light />
+    <app-floor />
+    @for (model of models; track $index) {
+    <app-model [src]="model.src"></app-model>
+    }
+  </app-canvas>
+</div>
 <button (click)="pushModel()">TEST</button>

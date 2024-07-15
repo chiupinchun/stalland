@@ -12,7 +12,7 @@ import { ModelComponent } from '../model/model.component';
   styleUrls: ['./canvas.component.scss']
 })
 export class CanvasComponent {
-  @ViewChild('canvasContainer') canvasContainer!: ElementRef;
+  @ViewChild('canvasContainer') canvasContainer!: ElementRef<HTMLDivElement>;
 
   @ContentChildren(LightComponent) lightComponents!: QueryList<LightComponent>;
   @ContentChildren(FloorComponent) floorComponents!: QueryList<FloorComponent>;
@@ -25,7 +25,6 @@ export class CanvasComponent {
   ) { }
 
   ngAfterContentChecked(): void {
-    console.log(this.modelComponents)
     // 將 scene 傳遞給子組件
     this.lightComponents?.forEach(comp => comp.scene = this.scene);
     this.floorComponents?.forEach(comp => comp.scene = this.scene);
@@ -33,12 +32,13 @@ export class CanvasComponent {
   }
 
   async ngAfterViewInit() {
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const containerEl = this.canvasContainer.nativeElement
+    const camera = new THREE.PerspectiveCamera(75, containerEl.clientWidth / containerEl.clientHeight, 0.1, 1000);
     const renderer = new THREE.WebGLRenderer();
-    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setSize(containerEl.clientWidth, containerEl.clientHeight);
     renderer.shadowMap.enabled = true; // 啟用陰影
 
-    this.canvasContainer.nativeElement.appendChild(renderer.domElement);
+    containerEl.appendChild(renderer.domElement);
 
     // 調整攝像頭距離
     camera.position.z = 1;
@@ -54,9 +54,9 @@ export class CanvasComponent {
     this.ngZone.runOutsideAngular(animate)
 
     window.addEventListener('resize', () => {
-      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.aspect = containerEl.clientWidth / containerEl.clientHeight;
       camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setSize(containerEl.clientWidth, containerEl.clientHeight);
     });
   }
 }
