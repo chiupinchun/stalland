@@ -12,10 +12,9 @@ import { ModelComponent } from "@app/common/three-model/model/model.component";
   styleUrl: './home.component.scss'
 })
 export class HomeComponent {
-  models = [
-    { src: 'assets/prairie-dog.glb' }
-  ]
+  position: [number, number] = [0, 0]
   pushModel() {
-    this.models.push({ src: 'assets/prairie-dog.glb' })
+    const [x, z] = this.position
+    this.position = [x + 0.1, z + 0.1]
   }
 }
