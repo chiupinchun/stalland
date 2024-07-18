@@ -14,6 +14,8 @@ import { ModelComponent } from '../model/model.component';
 export class CanvasComponent {
   @ViewChild('canvasContainer') canvasContainer!: ElementRef<HTMLDivElement>;
 
+  @ContentChildren('scene') needSceneElements!: QueryList<any>
+
   @ContentChildren(LightComponent) lightComponents!: QueryList<LightComponent>;
   @ContentChildren(FloorComponent) floorComponents!: QueryList<FloorComponent>;
   @ContentChildren(ModelComponent) modelComponents!: QueryList<ModelComponent>;
@@ -26,9 +28,10 @@ export class CanvasComponent {
 
   ngAfterContentChecked(): void {
     // 將 scene 傳遞給子組件
-    this.lightComponents?.forEach(comp => comp.scene = this.scene);
-    this.floorComponents?.forEach(comp => comp.scene = this.scene);
-    this.modelComponents?.forEach(comp => comp.scene = this.scene);
+    this.needSceneElements?.forEach(comp => comp.scene = this.scene)
+    // this.lightComponents?.forEach(comp => comp.scene = this.scene);
+    // this.floorComponents?.forEach(comp => comp.scene = this.scene);
+    // this.modelComponents?.forEach(comp => comp.scene = this.scene);
   }
 
   async ngAfterViewInit() {

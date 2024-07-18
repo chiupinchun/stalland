@@ -1,8 +1,8 @@
 <div style="height: 500px;">
   <app-canvas>
-    <app-light />
-    <app-floor />
-    <app-model src="assets/prairie-dog.glb" [position]="position"></app-model>
+    <app-light #scene />
+    <app-floor #scene />
+    <app-model #scene src="assets/prairie-dog.glb" [position]="position"></app-model>
   </app-canvas>
 </div>
 <button (click)="pushModel()">TEST</button>
