@@ -3,6 +3,8 @@
     <app-light #scene />
     <app-floor #scene />
     <app-model #scene src="assets/prairie-dog.glb" [position]="position"></app-model>
+
+    <app-stars #scene [count]="1000" [distanceRange]="[10,20]"></app-stars>
   </app-canvas>
 </div>
 <button (click)="pushModel()">TEST</button>

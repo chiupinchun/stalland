@@ -44,9 +44,9 @@ export class CanvasComponent {
     containerEl.appendChild(renderer.domElement);
 
     // 調整攝像頭距離
-    camera.position.z = 1;
+    camera.position.z = 0.8;
     camera.position.y = 0.5;
-    camera.rotation.x = -30 / 180 * Math.PI;
+    camera.rotation.x = -15 / 180 * Math.PI;
 
 
 
