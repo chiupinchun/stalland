@@ -1,10 +1,13 @@
-<div style="height: 500px;">
+<div style="height: 100vh;">
   <app-canvas>
     <app-light #scene />
     <app-floor #scene />
     <app-model #scene src="assets/prairie-dog.glb" [position]="position"></app-model>
 
     <app-stars #scene [count]="1000" [distanceRange]="[10,20]"></app-stars>
+
+    <div style="position: absolute;top: 1rem;left: 1rem; color: pink">
+      avatars
+    </div>
   </app-canvas>
 </div>
-<button (click)="pushModel()">TEST</button>
