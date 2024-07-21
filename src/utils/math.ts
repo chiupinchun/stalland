@@ -8,3 +8,8 @@ export const getRandomFromRange = (min: number, max: number, isPasive = true) =>
 
 export const degToRadian = (deg: number) => deg / 180 * Math.PI
 export const radianToDeg = (radian: number) => radian * 180 / Math.PI
+
+export const getRotationByOffset = (deltaX: number, deltaZ: number) => {
+  const prefix = deltaX >= 0 ? degToRadian(90) : degToRadian(270)
+  return prefix - Math.atan(deltaZ / deltaX)
+}

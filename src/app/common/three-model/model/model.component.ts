@@ -1,6 +1,7 @@
 import { Component, Input, NgZone, OnInit, SimpleChanges } from '@angular/core';
 import * as THREE from 'three'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import { degToRadian, getRotationByOffset } from 'utils/math';
 
 @Component({
   selector: 'app-model',
@@ -53,10 +54,12 @@ export class ModelComponent {
       if (this.position) {
         const [currentX, _, currentZ] = gltf.scene.position
         const [goalX, goalZ] = this.position
+        const [deltaX, deltaZ] = [goalX - currentX, goalZ - currentZ]
+        gltf.scene.rotation.y = getRotationByOffset(deltaX, deltaZ)
         gltf.scene.position.set(
-          currentX + (goalX - currentX) * delta,
+          currentX + (deltaX) * delta,
           0,
-          currentZ + (goalZ - currentZ) * delta
+          currentZ + (deltaZ) * delta
         )
       }
     }
