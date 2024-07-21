@@ -3,6 +3,7 @@ import * as THREE from 'three';
 import { LightComponent } from '../light/light.component';
 import { FloorComponent } from '../floor/floor.component';
 import { ModelComponent } from '../model/model.component';
+import { degToRadian } from 'utils/math';
 
 @Component({
   selector: 'app-canvas',
@@ -43,7 +44,7 @@ export class CanvasComponent {
     this.camera.position.x = this.cameraPosition[0]
     this.camera.position.z = this.cameraPosition[1];
     this.camera.position.y = 0.3;
-    this.camera.rotation.x = -25 / 180 * Math.PI;
+    this.camera.rotation.x = degToRadian(-25)
 
     const clock = new THREE.Clock()
 

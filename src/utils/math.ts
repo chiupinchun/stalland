@@ -5,3 +5,6 @@ export const getRandomFromRange = (min: number, max: number, isPasive = true) =>
 
   return (min + Math.random() * (max - min)) * direct
 }
+
+export const degToRadian = (deg: number) => deg / 180 * Math.PI
+export const radianToDeg = (radian: number) => radian * 180 / Math.PI
