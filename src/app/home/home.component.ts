@@ -7,12 +7,13 @@ import { StarsComponent } from "../common/three-model/stars/stars.component";
 import { AvatarComponent } from "../common/avatar/avatar.component";
 import { MOVE_STEP_LENGTH, RANDOM_MOVE_PERIOD } from '@constants/spirit-model';
 import { getRandomFromRange } from 'utils/math';
-import { spirits } from 'config/spirit';
+import { Spirit, spirits } from 'config/spirit';
+import { AvatarListComponent } from "./avatar-list/avatar-list.component";
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CanvasComponent, LightComponent, FloorComponent, ModelComponent, StarsComponent, AvatarComponent],
+  imports: [CanvasComponent, LightComponent, FloorComponent, ModelComponent, StarsComponent, AvatarComponent, AvatarListComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
@@ -48,7 +49,10 @@ export class HomeComponent {
     this.spirits.forEach(randomMove)
   }
 
-  speakTo(spirit: typeof this.spirits[number]) {
+  handleSpeak(spiritKey: Spirit['key']) {
+    const spirit = this.spirits.find(spirit => spirit.key === spiritKey)
+    if (!spirit) { return }
+
     const [x, z] = spirit.position
     this.cameraPosition = [x, z + 0.5]
     this.speakingSpirit = spirit
