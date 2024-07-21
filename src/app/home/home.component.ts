@@ -7,54 +7,32 @@ import { StarsComponent } from "../common/three-model/stars/stars.component";
 import { AvatarComponent } from "../common/avatar/avatar.component";
 import { MOVE_STEP_LENGTH, RANDOM_MOVE_PERIOD } from '@constants/spirit-model';
 import { getRandomFromRange } from 'utils/math';
-
-interface Spirit {
-  key: string
-  position: [number, number]
-}
+import { Spirit, spirits } from 'config/spirit';
+import { AvatarListComponent } from "./avatar-list/avatar-list.component";
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CanvasComponent, LightComponent, FloorComponent, ModelComponent, StarsComponent, AvatarComponent],
+  imports: [CanvasComponent, LightComponent, FloorComponent, ModelComponent, StarsComponent, AvatarComponent, AvatarListComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
 export class HomeComponent {
-  spirits: Spirit[] = [
-    {
-      key: 'cat',
-      position: [1, 0]
-    },
-    {
-      key: 'chikun',
-      position: [-1, -1]
-    },
-    {
-      key: 'dog',
-      position: [1, -1]
-    },
-    {
-      key: 'fish',
-      position: [-1, 0]
-    },
-    {
-      key: 'prairie-dog',
-      position: [0, 0]
-    },
-    {
-      key: 'snake',
-      position: [0, -1]
-    },
-  ]
-  speakingSpirit?: Spirit
+  spirits = spirits.map(spirit => ({
+    key: spirit.key,
+    position: [
+      getRandomFromRange(0, 2, false),
+      -getRandomFromRange(0, 2)
+    ] as [number, number]
+  }))
+  speakingSpirit?: typeof this.spirits[number]
 
   cameraPosition: [number, number] = [0, 2]
 
   constructor() { }
 
   ngOnInit(): void {
-    const randomMove = (spirit: Spirit) => {
+    const randomMove = (spirit: typeof this.spirits[number]) => {
       setTimeout(() => {
         randomMove(spirit)
       }, getRandomFromRange(...RANDOM_MOVE_PERIOD))
@@ -71,7 +49,10 @@ export class HomeComponent {
     this.spirits.forEach(randomMove)
   }
 
-  speakTo(spirit: Spirit) {
+  handleSpeak(spiritKey: Spirit['key']) {
+    const spirit = this.spirits.find(spirit => spirit.key === spiritKey)
+    if (!spirit) { return }
+
     const [x, z] = spirit.position
     this.cameraPosition = [x, z + 0.5]
     this.speakingSpirit = spirit
