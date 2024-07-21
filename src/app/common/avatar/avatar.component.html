@@ -1,0 +1,4 @@
+<div [class]="'rounded-full overflow-hidden cursor-pointer ' + class">
+  <img [src]="src" [alt]="alt" [width]="getSize().width" [height]="getSize().height"
+    [class]="'hover:scale-125 transition-all ' + imgClass" (click)="handleClick()" />
+</div>
