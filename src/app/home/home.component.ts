@@ -5,6 +5,8 @@ import { FloorComponent } from "@app/common/three-model/floor/floor.component";
 import { ModelComponent } from "@app/common/three-model/model/model.component";
 import { StarsComponent } from "../common/three-model/stars/stars.component";
 import { AvatarComponent } from "../common/avatar/avatar.component";
+import { MOVE_STEP_LENGTH, RANDOM_MOVE_PERIOD } from '@constants/spirit-model';
+import { getRandomFromRange } from 'utils/math';
 
 interface Spirit {
   key: string
@@ -45,6 +47,22 @@ export class HomeComponent {
       position: [0, -1]
     },
   ]
+
+  ngOnInit(): void {
+    const randomMove = (spirit: Spirit) => {
+      const [rawX, rawZ] = spirit.position
+      spirit.position = [
+        rawX + getRandomFromRange(...MOVE_STEP_LENGTH, false),
+        rawZ + getRandomFromRange(...MOVE_STEP_LENGTH, false)
+      ]
+
+      setTimeout(() => {
+        randomMove(spirit)
+      }, getRandomFromRange(...RANDOM_MOVE_PERIOD))
+    }
+
+    this.spirits.forEach(randomMove)
+  }
 
   cameraPosition: [number, number] = [0, 0.5]
   handleClickAvatar(spirit: Spirit) {
