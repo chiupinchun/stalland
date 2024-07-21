@@ -6,6 +6,11 @@ import { ModelComponent } from "@app/common/three-model/model/model.component";
 import { StarsComponent } from "../common/three-model/stars/stars.component";
 import { AvatarComponent } from "../common/avatar/avatar.component";
 
+interface Spirit {
+  key: string
+  position: [number, number]
+}
+
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -15,8 +20,30 @@ import { AvatarComponent } from "../common/avatar/avatar.component";
 })
 export class HomeComponent {
   position: [number, number] = [0, 0]
-  pushModel() {
-    const [x, z] = this.position
-    this.position = [x + 0.1, z + 0.1]
-  }
+  spirits: Spirit[] = [
+    {
+      key: 'cat',
+      position: [1, 0]
+    },
+    {
+      key: 'chikun',
+      position: [-1, -1]
+    },
+    {
+      key: 'dog',
+      position: [1, -1]
+    },
+    {
+      key: 'fish',
+      position: [-1, 0]
+    },
+    {
+      key: 'prairie-dog',
+      position: [0, 0]
+    },
+    {
+      key: 'snake',
+      position: [0, -1]
+    },
+  ]
 }

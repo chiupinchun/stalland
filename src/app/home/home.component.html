@@ -2,18 +2,18 @@
   <app-canvas>
     <app-light #scene />
     <app-floor #scene />
-    <app-model #scene src="assets/prairie-dog.glb" [position]="position"></app-model>
+    @for (spirit of spirits; track spirit.key) {
+    <app-model #scene [src]="'assets/' + spirit.key + '.glb'" [position]="spirit.position"></app-model>
+    }
+
 
     <app-stars #scene [count]="1000" [distanceRange]="[10,20]"></app-stars>
 
     <div class="absolute top-0 left-10 h-full flex items-center">
       <div class="flex flex-col space-y-5 p-5 rounded-full bg-sky-200 _bg-cyan-100">
-        <app-avatar src="assets/avatars/cat.webp" />
-        <app-avatar src="assets/avatars/chikun.webp" />
-        <app-avatar src="assets/avatars/dog.webp" />
-        <app-avatar src="assets/avatars/fish.webp" />
-        <app-avatar src="assets/avatars/prairie-dog.webp" />
-        <app-avatar src="assets/avatars/snake.webp" />
+        @for(spirit of spirits; track spirit.key) {
+        <app-avatar [src]="'assets/avatars/' + spirit.key + '.webp'" />
+        }
       </div>
     </div>
   </app-canvas>
