@@ -46,4 +46,10 @@ export class HomeComponent {
       position: [0, -1]
     },
   ]
+
+  cameraPosition: [number, number] = [0, 0.5]
+  handleClickAvatar(spirit: Spirit) {
+    const [x, z] = spirit.position
+    this.cameraPosition = [x, z + 0.5]
+  }
 }

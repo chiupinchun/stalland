@@ -16,27 +16,23 @@ export class CanvasComponent {
 
   @ContentChildren('scene') needSceneElements!: QueryList<any>
 
-  @ContentChildren(LightComponent) lightComponents!: QueryList<LightComponent>;
-  @ContentChildren(FloorComponent) floorComponents!: QueryList<FloorComponent>;
-  @ContentChildren(ModelComponent) modelComponents!: QueryList<ModelComponent>;
-
   scene = new THREE.Scene();
+
+  @Input()
+  cameraPosition: [number, number] = [0, 0.8]
+  camera!: THREE.PerspectiveCamera
 
   constructor(
     private ngZone: NgZone
   ) { }
 
   ngAfterContentChecked(): void {
-    // 將 scene 傳遞給子組件
     this.needSceneElements?.forEach(comp => comp.scene = this.scene)
-    // this.lightComponents?.forEach(comp => comp.scene = this.scene);
-    // this.floorComponents?.forEach(comp => comp.scene = this.scene);
-    // this.modelComponents?.forEach(comp => comp.scene = this.scene);
   }
 
   async ngAfterViewInit() {
     const containerEl = this.canvasContainer.nativeElement
-    const camera = new THREE.PerspectiveCamera(75, containerEl.clientWidth / containerEl.clientHeight, 0.1, 1000);
+    this.camera = new THREE.PerspectiveCamera(75, containerEl.clientWidth / containerEl.clientHeight, 0.1, 1000);
     const renderer = new THREE.WebGLRenderer();
     renderer.setSize(containerEl.clientWidth, containerEl.clientHeight);
     renderer.shadowMap.enabled = true; // 啟用陰影
@@ -44,22 +40,44 @@ export class CanvasComponent {
     containerEl.appendChild(renderer.domElement);
 
     // 調整攝像頭距離
-    camera.position.z = 0.8;
-    camera.position.y = 0.5;
-    camera.rotation.x = -15 / 180 * Math.PI;
+    this.camera.position.x = this.cameraPosition[0]
+    this.camera.position.z = this.cameraPosition[1];
+    this.camera.position.y = 0.3;
+    this.camera.rotation.x = -25 / 180 * Math.PI;
 
-
+    const clock = new THREE.Clock()
 
     const animate = () => {
       requestAnimationFrame(animate);
-      renderer.render(this.scene, camera);
+
+      const delta = clock.getDelta()
+      this.moveCamera(delta * 5)
+
+      renderer.render(this.scene, this.camera);
     };
     this.ngZone.runOutsideAngular(animate)
 
     window.addEventListener('resize', () => {
-      camera.aspect = containerEl.clientWidth / containerEl.clientHeight;
-      camera.updateProjectionMatrix();
+      this.camera.aspect = containerEl.clientWidth / containerEl.clientHeight;
+      this.camera.updateProjectionMatrix();
       renderer.setSize(containerEl.clientWidth, containerEl.clientHeight);
     });
+  }
+
+  moveCamera(delta: number): void {
+    if (!this.camera) { return }
+
+    const [goalX, goalZ] = this.cameraPosition
+    const [currentX, _, currentZ] = this.camera.position
+
+    this.camera.position.set(
+      Math.abs(goalX - currentX) > delta
+        ? currentX + (goalX - currentX) * delta
+        : goalX,
+      this.camera.position.y,
+      Math.abs(goalZ - currentZ) > delta
+        ? currentZ + (goalZ - currentZ) * delta
+        : goalZ
+    )
   }
 }
