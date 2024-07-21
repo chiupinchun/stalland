@@ -19,7 +19,6 @@ interface Spirit {
   styleUrl: './home.component.scss'
 })
 export class HomeComponent {
-  position: [number, number] = [0, 0]
   spirits: Spirit[] = [
     {
       key: 'cat',
