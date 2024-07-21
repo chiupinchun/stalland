@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import * as THREE from 'three'
+import { getRandomFromRange } from 'utils/math';
 
 @Component({
   selector: 'app-stars',
@@ -21,18 +22,11 @@ export class StarsComponent {
       const material = new THREE.MeshBasicMaterial({ color: 0xffffff });
       const star = new THREE.Mesh(geometry, material);
       const [x, z] = [
-        this.getPosition(near, far), this.getPosition(0, far)
+        getRandomFromRange(near, far, false), getRandomFromRange(0, far, false)
       ].sort(() => Math.random() > 0.5 ? 1 : -1)
-      const y = this.getPosition(1, 20)
+      const y = getRandomFromRange(1, 20)
       star.position.set(x, y, z);
       this.scene.add(star);
     }
-  }
-
-  getPosition(near: number, far: number) {
-    const direct = Math.random() > 0.5
-      ? 1
-      : -1
-    return (Math.random() * (far - near) + near) * direct
   }
 }
