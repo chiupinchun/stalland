@@ -3,7 +3,8 @@
     <app-light #scene />
     <app-floor #scene />
     @for (spirit of spirits; track spirit.key) {
-    <app-model #scene [src]="'assets/' + spirit.key + '.glb'" [position]="spirit.position"></app-model>
+    <app-model #scene [src]="'assets/' + spirit.key + '.glb'" [position]="spirit.position"
+      [keepRotation]="speakingSpirit === spirit ? 0 : undefined" />
     }
 
     <app-stars #scene [count]="1000" [distanceRange]="[10,20]"></app-stars>
@@ -11,7 +12,7 @@
     <div class="absolute top-0 left-10 h-full flex items-center">
       <div class="flex flex-col space-y-5 p-5 rounded-full bg-sky-200 _bg-cyan-100">
         @for(spirit of spirits; track spirit.key) {
-        <app-avatar [src]="'assets/avatars/' + spirit.key + '.webp'" (click)="handleClickAvatar(spirit)" />
+        <app-avatar [src]="'assets/avatars/' + spirit.key + '.webp'" (click)="speakTo(spirit)" />
         }
       </div>
     </div>

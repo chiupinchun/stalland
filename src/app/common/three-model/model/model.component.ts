@@ -15,6 +15,8 @@ export class ModelComponent {
   src!: string
   @Input()
   position?: [number, number]
+  @Input()
+  keepRotation?: number
 
   constructor(
     private ngZone: NgZone
@@ -55,7 +57,7 @@ export class ModelComponent {
         const [currentX, _, currentZ] = gltf.scene.position
         const [goalX, goalZ] = this.position
         const [deltaX, deltaZ] = [goalX - currentX, goalZ - currentZ]
-        gltf.scene.rotation.y = getRotationByOffset(deltaX, deltaZ)
+        gltf.scene.rotation.y = this.keepRotation ?? getRotationByOffset(deltaX, deltaZ)
         gltf.scene.position.set(
           currentX + (deltaX) * delta,
           0,

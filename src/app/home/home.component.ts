@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Inject, SimpleChanges } from '@angular/core';
 import { CanvasComponent } from "@app/common/three-model/canvas/canvas.component";
 import { LightComponent } from "@app/common/three-model/light/light.component";
 import { FloorComponent } from "@app/common/three-model/floor/floor.component";
@@ -47,26 +47,33 @@ export class HomeComponent {
       position: [0, -1]
     },
   ]
+  speakingSpirit?: Spirit
+
+  cameraPosition: [number, number] = [0, 2]
+
+  constructor() { }
 
   ngOnInit(): void {
     const randomMove = (spirit: Spirit) => {
+      setTimeout(() => {
+        randomMove(spirit)
+      }, getRandomFromRange(...RANDOM_MOVE_PERIOD))
+
+      if (this.speakingSpirit === spirit) { return }
+
       const [rawX, rawZ] = spirit.position
       spirit.position = [
         rawX + getRandomFromRange(...MOVE_STEP_LENGTH, false),
         rawZ + getRandomFromRange(...MOVE_STEP_LENGTH, false)
       ]
-
-      setTimeout(() => {
-        randomMove(spirit)
-      }, getRandomFromRange(...RANDOM_MOVE_PERIOD))
     }
 
     this.spirits.forEach(randomMove)
   }
 
-  cameraPosition: [number, number] = [0, 0.5]
-  handleClickAvatar(spirit: Spirit) {
+  speakTo(spirit: Spirit) {
     const [x, z] = spirit.position
     this.cameraPosition = [x, z + 0.5]
+    this.speakingSpirit = spirit
   }
 }
