@@ -9,17 +9,18 @@ import { MOVE_STEP_LENGTH, RANDOM_MOVE_PERIOD } from '@constants/spirit-model';
 import { getRandomFromRange } from 'utils/math';
 import { Spirit, spirits } from 'config/spirit';
 import { AvatarListComponent } from "./avatar-list/avatar-list.component";
+import { DialogComponent } from "./dialog/dialog.component";
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CanvasComponent, LightComponent, FloorComponent, ModelComponent, StarsComponent, AvatarComponent, AvatarListComponent],
+  imports: [CanvasComponent, LightComponent, FloorComponent, ModelComponent, StarsComponent, AvatarComponent, AvatarListComponent, DialogComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
 export class HomeComponent {
   spirits = spirits.map(spirit => ({
-    key: spirit.key,
+    ...spirit,
     position: [
       getRandomFromRange(0, 2, false),
       -getRandomFromRange(0, 2)

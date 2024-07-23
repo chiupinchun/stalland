@@ -1,0 +1,8 @@
+<div class="absolute bottom-10 left-0 flex justify-center w-full">
+  <div class="flex p-5 lg:p-10 w-3/5 border-sky-700 shadow-2xl rounded bg-sky-700 bg-opacity-50 text-sky-100">
+    @if (img) {
+    <app-avatar [src]="img" class="me-3 lg:me-5" size="large" />
+    }
+    <p class="h-full whitespace-pre-line">{{ content }}</p>
+  </div>
+</div>

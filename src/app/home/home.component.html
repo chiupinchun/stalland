@@ -9,6 +9,11 @@
 
     <app-stars #scene [count]="1000" [distanceRange]="[10,20]"></app-stars>
 
-    <app-avatar-list (onSpeak)="handleSpeak($event)" />
+    @if(speakingSpirit) {
+    <app-dialog [content]="speakingSpirit.name + '\n' + speakingSpirit.lines"
+      [img]="'assets/avatars/' + speakingSpirit.key + '.webp'" />
+    }
+
+    <app-avatar-list (onSpeak)="handleSpeak($event)" class="z-10" />
   </app-canvas>
 </div>
