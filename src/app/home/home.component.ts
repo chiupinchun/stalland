@@ -20,7 +20,7 @@ import { DialogComponent } from "./dialog/dialog.component";
 })
 export class HomeComponent {
   spirits = spirits.map(spirit => ({
-    key: spirit.key,
+    ...spirit,
     position: [
       getRandomFromRange(0, 2, false),
       -getRandomFromRange(0, 2)

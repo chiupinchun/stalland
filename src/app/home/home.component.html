@@ -9,7 +9,10 @@
 
     <app-stars #scene [count]="1000" [distanceRange]="[10,20]"></app-stars>
 
-    <app-dialog head="爪之星靈" [content]="'爪之星靈：\n……（呆滯貌）'" img="assets/avatars/prairie-dog.webp" />
+    @if(speakingSpirit) {
+    <app-dialog [content]="speakingSpirit.name + '\n' + speakingSpirit.lines"
+      [img]="'assets/avatars/' + speakingSpirit.key + '.webp'" />
+    }
 
     <app-avatar-list (onSpeak)="handleSpeak($event)" class="z-10" />
   </app-canvas>
