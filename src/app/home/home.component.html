@@ -3,7 +3,7 @@
     <app-light #scene />
     <app-floor #scene />
     @for (spirit of spirits; track spirit.key) {
-    <app-model #scene [src]="'assets/' + spirit.key + '.glb'" [position]="spirit.position"
+    <app-model #scene [src]="'assets/models/' + spirit.key + '.glb'" [position]="spirit.position"
       [keepRotation]="speakingSpirit === spirit ? 0 : undefined" />
     }
 
