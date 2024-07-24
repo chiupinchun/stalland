@@ -18,7 +18,7 @@ export class LightComponent {
     // 聚光燈
     const spotLight = new THREE.SpotLight(0xffffff, Math.PI);
     spotLight.position.set(10, 10, 10);
-    spotLight.angle = 0.15;
+    spotLight.angle = 1;
     spotLight.penumbra = 1;
     spotLight.decay = 0;
     spotLight.castShadow = true;
@@ -28,6 +28,6 @@ export class LightComponent {
     const pointLight = new THREE.PointLight(0xffffff, Math.PI, 0, 0);
     pointLight.position.set(-10, -10, -10);
     pointLight.castShadow = true;
-    this.scene.add(pointLight)
+    // this.scene.add(pointLight)
   }
 }
