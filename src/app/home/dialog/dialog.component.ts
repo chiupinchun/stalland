@@ -13,4 +13,14 @@ export class DialogComponent {
   content?: string
   @Input()
   img?: string
+  @Input()
+  options?: {
+    text: string
+    onSelect: () => void
+  }[]
+
+  @Input()
+  optionHeight = 40
+  @Input()
+  optionGap = 10
 }

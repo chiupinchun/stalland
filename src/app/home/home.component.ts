@@ -24,7 +24,11 @@ export class HomeComponent {
     position: [
       getRandomFromRange(0, 2, false),
       -getRandomFromRange(0, 2)
-    ] as [number, number]
+    ] as [number, number],
+    options: [
+      { text: '使用服務', onSelect: () => { } },
+      { text: '接受試煉', onSelect: () => { } },
+    ]
   }))
   speakingSpirit?: typeof this.spirits[number]
 
