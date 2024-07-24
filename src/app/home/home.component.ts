@@ -10,6 +10,7 @@ import { getRandomFromRange } from 'utils/math';
 import { Spirit, spirits } from 'config/spirit';
 import { AvatarListComponent } from "./avatar-list/avatar-list.component";
 import { DialogComponent } from "./dialog/dialog.component";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -26,15 +27,18 @@ export class HomeComponent {
       -getRandomFromRange(0, 2)
     ] as [number, number],
     options: [
-      { text: '使用服務', onSelect: () => { } },
-      { text: '接受試煉', onSelect: () => { } },
+      { text: '使用服務', onSelect: () => this.router.navigate(spirit.service.split('/')) },
+      { text: '接受試煉', onSelect: () => this.router.navigate(spirit.trial.split('/')) },
     ]
   }))
   speakingSpirit?: typeof this.spirits[number]
 
   cameraPosition: [number, number] = [0, 2]
 
-  constructor() { }
+  constructor(
+    @Inject(Router)
+    private readonly router: Router
+  ) { }
 
   ngOnInit(): void {
     const randomMove = (spirit: typeof this.spirits[number]) => {
