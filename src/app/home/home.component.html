@@ -11,7 +11,7 @@
 
     @if(speakingSpirit) {
     <app-dialog [content]="speakingSpirit.name + '\n' + speakingSpirit.lines"
-      [img]="'assets/avatars/' + speakingSpirit.key + '.webp'" />
+      [img]="'assets/avatars/' + speakingSpirit.key + '.webp'" [options]="speakingSpirit.options" />
     }
 
     <app-avatar-list (onSpeak)="handleSpeak($event)" class="z-10" />

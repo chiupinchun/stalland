@@ -1,8 +1,26 @@
 <div class="absolute bottom-10 left-0 flex justify-center w-full">
-  <div class="flex p-5 lg:p-10 w-3/5 border-sky-700 shadow-2xl rounded bg-sky-700 bg-opacity-50 text-sky-100">
+  <div class="relative flex p-5 lg:p-10 w-3/5 border-sky-700 shadow-2xl rounded bg-sky-700 bg-opacity-50 text-sky-100">
     @if (img) {
     <app-avatar [src]="img" class="me-3 lg:me-5" size="large" />
     }
     <p class="h-full whitespace-pre-line">{{ content }}</p>
+
+    @if(options && options.length) {
+    <ul class="absolute right-8" [style]="{
+      top: (-options.length * optionHeight - optionGap * (options.length - 1) - 10) + 'px'
+    }">
+      @for(option of options;track $index) {
+      <li (click)="option.onSelect()"
+        class="group flex items-center px-4 rounded bg-sky-700 bg-opacity-50 cursor-pointer hover:bg-sky-600" [style]="{
+        marginBottom: optionGap + 'px',
+        height: optionHeight + 'px'
+      }">
+        <span class="opacity-0 group-hover:opacity-100">＞</span>
+        <span class="mx-2">{{ option.text }}</span>
+        <span class="opacity-0 group-hover:opacity-100">＜</span>
+      </li>
+      }
+    </ul>
+    }
   </div>
 </div>
