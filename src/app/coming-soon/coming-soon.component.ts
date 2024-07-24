@@ -13,6 +13,7 @@ import { RouterLink } from '@angular/router';
 })
 export class ComingSoonComponent {
   count = 0
+  countTimer?: ReturnType<typeof setInterval>
 
   getBackgroundSize() {
     const rate = 100 / Math.pow(2, this.count % 3)
@@ -20,9 +21,12 @@ export class ComingSoonComponent {
   }
 
   ngAfterViewInit(): void {
-    setInterval(() => {
-      console.log(this.count)
+    this.countTimer = setInterval(() => {
       this.count++
     }, 500)
+  }
+
+  ngOnDestroy(): void {
+    clearInterval(this.countTimer)
   }
 }
