@@ -57,7 +57,10 @@ export class ModelComponent {
         const [currentX, _, currentZ] = gltf.scene.position
         const [goalX, goalZ] = this.position
         const [deltaX, deltaZ] = [goalX - currentX, goalZ - currentZ]
-        gltf.scene.rotation.y = this.keepRotation ?? getRotationByOffset(deltaX, deltaZ)
+        // setting rotation breaks performance, so rotate only when neccessary!
+        if (deltaX !== 0 || deltaZ !== 0) {
+          gltf.scene.rotation.y = this.keepRotation ?? getRotationByOffset(deltaX, deltaZ)
+        }
         gltf.scene.position.set(
           currentX + (deltaX) * delta,
           0,
